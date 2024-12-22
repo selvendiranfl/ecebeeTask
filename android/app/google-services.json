@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "843229078574",
+    "project_id": "fir-project-73425",
+    "storage_bucket": "fir-project-73425.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843229078574:android:22f16e81b07e9c6440abbf",
+        "android_client_info": {
+          "package_name": "com.example.ecebee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwy_qHgsJuiTZXEo1E9B76o2SSovY5UH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
