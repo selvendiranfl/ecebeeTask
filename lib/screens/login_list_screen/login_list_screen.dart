@@ -48,12 +48,31 @@ class _LoginListScreenState extends State<LoginListScreen> {
                   alignment: Alignment.topCenter,
                   children: [
                     Positioned(
+                      top: SizeConfig.blockSizeVertical! *1,
+                      left: SizeConfig.blockSizeHorizontal! * 3,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: CustomText(
+                          text: "<",
+                          color: Colors.white,
+                          size: SizeConfig.blockSizeVertical! * 5,
+                        ),
+                      ),
+                    ),
+                    Positioned(
                       top: SizeConfig.blockSizeVertical! * 3,
                       right: SizeConfig.blockSizeHorizontal! * 3,
-                      child: CustomText(
-                        text: "Last Login",
-                        color: Colors.white,
-                        size: SizeConfig.screenWidth! * large_text,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.pushNamedAndRemoveUntil(context,AppRoutes.loginScreen, (route) => false);
+                        },
+                        child: CustomText(
+                          text: "Logout",
+                          color: Colors.white,
+                          size: SizeConfig.screenWidth! * large_text,
+                        ),
                       ),
                     ),
                     Padding(
@@ -280,7 +299,7 @@ class _LoginListScreenState extends State<LoginListScreen> {
                             padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal! *5),
                             child: Center(
                               child: CustomText(
-                                text: "PLUGIN",
+                                text: "Last Login",
                                 color: Colors.white,
                                 size: SizeConfig.screenWidth! * large_text,
                               ),

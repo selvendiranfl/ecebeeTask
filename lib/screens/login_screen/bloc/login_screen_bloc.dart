@@ -19,25 +19,29 @@ class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
           phoneNumber: "+91${numberController.text.trim()}",
           verificationCompleted: (PhoneAuthCredential credential) async {
             await _auth.signInWithCredential(credential);
+            Utilities.dismissProgress();
             Utilities.showToast( "Phone number automatically verified!");
 
           },
           verificationFailed: (FirebaseAuthException e) {
+            Utilities.dismissProgress();
             Utilities.showToast( "Verification failed: ${e.message}");
             print(e.message);
           },
           codeSent: (String verificationId, int? resendToken) {
+            Utilities.dismissProgress();
             verificationid = verificationId;
             add(OtpVerifyEvent());
           },
           codeAutoRetrievalTimeout: (String verificationId) {
+            Utilities.dismissProgress();
             verificationid= verificationId;
           },
         );
       }
 
       if(event is OtpVerifyEvent){
-
+        Utilities.showProgress();
         try {
           // Create credential and sign in
           PhoneAuthCredential credential = PhoneAuthProvider.credential(

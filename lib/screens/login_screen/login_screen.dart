@@ -13,7 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 
   late LoginScreenBloc bloc ;
-
+  final _loginFormKey = GlobalKey<FormState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -64,6 +64,14 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
+                  Positioned(
+                    top: SizeConfig.blockSizeVertical! *1,
+                    right: SizeConfig.blockSizeHorizontal! *5,
+                    child: CustomText(
+                      text: "LogOut",
+                      size: SizeConfig.screenWidth! * large_text,
+                    ),
+                  ),
                   Padding(
                     padding:  EdgeInsets.only(top: SizeConfig.blockSizeVertical! * 10),
                     child: Container(
@@ -99,124 +107,104 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Padding(
                     padding:  EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal! * 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomText(
-                          text: "Phone number",
-                          color: Colors.white,
-                          size: SizeConfig.screenWidth! * large_text,
-                        ),
-                        SizedBox(height: SizeConfig.blockSizeVertical! * 1,),
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical! * 7,
-                          child: TextFormField(
-                            style: TextStyle(color: Colors.white),
-                            keyboardType: TextInputType.number,
-                            controller: bloc.numberController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Enter Phone Number!";
+                    child: Form(
+                      key: _loginFormKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomText(
+                            text: "Phone number",
+                            color: Colors.white,
+                            size: SizeConfig.screenWidth! * large_text,
+                          ),
+                          SizedBox(height: SizeConfig.blockSizeVertical! * 1,),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical! * 7,
+                            child: TextFormField(
+                              style: TextStyle(color: Colors.white),
+                              keyboardType: TextInputType.number,
+                              controller: bloc.numberController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter Phone Number!";
+                                }
+                                if (!RegExp(r"^[0-9]{10}$").hasMatch(value)) {
+                                  return "Please Enter 10-digit Phone Number";
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                fillColor: textFormFieldColor,
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: SizeConfig.blockSizeVertical! * 1,),
+                          CustomText(
+                            text: "OTP",
+                            color: Colors.white,
+                            size: SizeConfig.screenWidth! * large_text,
+                          ),
+                          SizedBox(height: SizeConfig.blockSizeVertical! * 1,),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical! * 7,
+                            child: TextFormField(
+                              style: TextStyle(color: Colors.white),
+                              keyboardType: TextInputType.number,
+                              controller: bloc.otpController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter Phone Number!";
+                                }
+                                if (!RegExp(r"^[0-9]{6}$").hasMatch(value)) {
+                                  return "Please Enter 6-digit Phone Number";
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                fillColor: textFormFieldColor,
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: SizeConfig.blockSizeVertical! * 5,),
+                          MaterialButton(
+                            onPressed: () async {
+                              if (_loginFormKey.currentState!.validate()) {
+                                Utilities.loginTime = DateTime.now().toString();
+                                bloc.add(LoginEvent());
                               }
-                              if (!RegExp(r"^[0-9]{10}$").hasMatch(value)) {
-                                return "Please Enter 10-digit Phone Number";
-                              }
-                              return null;
                             },
-                            decoration: InputDecoration(
-                              fillColor: textFormFieldColor,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                            color: buttonColor,
+                            height: SizeConfig.blockSizeVertical! * 6,
+                            minWidth: SizeConfig.blockSizeHorizontal! *80,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                            child: Center(
+                              child: CustomText(
+                                text: "LOGIN",
+                                weight: FontWeight.bold,
+                                color: Colors.white,
+                                size: SizeConfig.screenWidth! * large_text,
                               ),
                             ),
-                          ),
-                        ),
-                        SizedBox(height: SizeConfig.blockSizeVertical! * 0.5,),
-                        // Align(
-                        //   alignment: Alignment.centerRight,
-                        //   child: InkWell(
-                        //     onTap: () async {
-                        //       sendOTP();
-                        //     },
-                        //     child: Container(
-                        //       height: SizeConfig.blockSizeVertical! * 3,
-                        //       width: SizeConfig.blockSizeHorizontal! * 23,
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(8),
-                        //         color: buttonColor,
-                        //       ),
-                        //       child: Center(
-                        //         child: CustomText(
-                        //           text: "Send OTP",
-                        //           weight: FontWeight.bold,
-                        //           color: Colors.white,
-                        //           size: SizeConfig.screenWidth! * medium_text,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        SizedBox(height: SizeConfig.blockSizeVertical! * 1,),
-                        CustomText(
-                          text: "OTP",
-                          color: Colors.white,
-                          size: SizeConfig.screenWidth! * large_text,
-                        ),
-                        SizedBox(height: SizeConfig.blockSizeVertical! * 1,),
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical! * 7,
-                          child: TextFormField(
-                            style: TextStyle(color: Colors.white),
-                            keyboardType: TextInputType.number,
-                            controller: bloc.otpController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Enter Phone Number!";
-                              }
-                              if (!RegExp(r"^[0-9]{10}$").hasMatch(value)) {
-                                return "Please Enter 10-digit Phone Number";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              fillColor: textFormFieldColor,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: SizeConfig.blockSizeVertical! * 5,),
-                        MaterialButton(
-                          onPressed: () async {
-                            Utilities.loginTime = DateTime.now().toString();
-                            bloc.add(LoginEvent());
-                          },
-                          color: buttonColor,
-                          height: SizeConfig.blockSizeVertical! * 6,
-                          minWidth: SizeConfig.blockSizeHorizontal! *80,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)
-                          ),
-                          child: Center(
-                            child: CustomText(
-                              text: "LOGIN",
-                              weight: FontWeight.bold,
-                              color: Colors.white,
-                              size: SizeConfig.screenWidth! * large_text,
-                            ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],

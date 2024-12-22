@@ -20,25 +20,6 @@ class _PluginScreenState extends State<PluginScreen> {
     bloc.randomNumber = Utilities.generateRandomFiveDigitNumber();
   }
 
-
-
-  // Future<void> saveLoginDetails() async {
-  //   final response = await Supabase.instance.client
-  //       .from('login_details')
-  //       .insert({
-  //     'ip_address': await Utilities.GetIPaddress(),
-  //     'latitude': bloc.latitude,
-  //     'longitude': bloc.longitude,
-  //     'timestamp': DateTime.now().toString(),
-  //   }).select('id').single();
-  //
-  //   if (response != null) {
-  //     bloc.loginId = response['id'];
-  //     print(bloc.loginId);
-  //   }
-  //     print('Login details saved successfully!');
-  // }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -60,10 +41,15 @@ class _PluginScreenState extends State<PluginScreen> {
                   Positioned(
                     top: SizeConfig.blockSizeVertical! * 3,
                     right: SizeConfig.blockSizeHorizontal! * 3,
-                    child: CustomText(
-                      text: "Logout",
-                      color: Colors.white,
-                      size: SizeConfig.screenWidth! * large_text,
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.pushNamedAndRemoveUntil(context,AppRoutes.loginScreen, (route) => false);
+                      },
+                      child: CustomText(
+                        text: "Logout",
+                        color: Colors.white,
+                        size: SizeConfig.screenWidth! * large_text,
+                      ),
                     ),
                   ),
                   Padding(
@@ -75,7 +61,7 @@ class _PluginScreenState extends State<PluginScreen> {
                         color: Colors.black,
                       ),
                       child: Center(
-                        child: SvgPicture.asset("assets/mailicon.svg",color: textFormFieldColor,height: SizeConfig.blockSizeVertical! *30,),
+                        child: SvgPicture.asset("assets/middleicon.svg",color: textFormFieldColor,height: SizeConfig.blockSizeVertical! *30,),
                       ),
                     ),
                   ),
