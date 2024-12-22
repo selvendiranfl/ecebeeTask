@@ -39,7 +39,6 @@ class _LoginListScreenState extends State<LoginListScreen> {
           return DefaultTabController(
             length: 3,
             child: Scaffold(
-              backgroundColor: Colors.black,
               body: Container(
                 height: SizeConfig.screenHeight,
                 decoration: BoxDecoration(

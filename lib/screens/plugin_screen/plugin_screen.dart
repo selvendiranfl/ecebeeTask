@@ -43,7 +43,6 @@ class _PluginScreenState extends State<PluginScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      backgroundColor: Colors.black,
       body: BlocListener<PluginScreenBloc, PluginScreenState>(
         listener: (context, state) {
           // TODO: implement listener

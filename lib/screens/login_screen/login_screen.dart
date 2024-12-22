@@ -56,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
       child: BlocBuilder<LoginScreenBloc, LoginScreenState>(
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: Colors.black,
             body: Container(
               height: SizeConfig.screenHeight,
               decoration: BoxDecoration(
