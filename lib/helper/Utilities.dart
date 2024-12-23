@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:ecebee/helper/size_config.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
@@ -17,22 +18,28 @@ class Utilities{
   static String loginTime = "";
   static String verficationid = "";
   static String ipAddress = "";
-  static String latitude = "";
-  static String longitude = "";
+  static String location = "";
+  static String phone_number = "";
   static int generateRandomFiveDigitNumber() {
     final random = Random();
     return random.nextInt(90000) + 10000;
   }
 
+
   static String convertTo12HourFormat(String dateTimeString) {
     try {
-      DateTime dateTime = DateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(dateTimeString);
-      return DateFormat.jm().format(dateTime); // Format as 'hh:mm a' (e.g., '8:26 PM')
+      // Parse the string as-is without converting to local or UTC
+      DateTime dateTime = DateTime.parse(dateTimeString);
+
+      // Format the DateTime object to the desired format
+      String formattedTime = DateFormat('h:mm a').format(dateTime);
+      return formattedTime; // Format as 'hh:mm a' (e.g., '7:43 PM')
     } catch (e) {
       print("Invalid datetime format: $dateTimeString");
       return "";
     }
   }
+
 
   static showToast(String text) {
     Fluttertoast.showToast(
@@ -63,45 +70,59 @@ class Utilities{
     }
     return ipAddress;
   }
-
-  static showProgress() {
-
-    showDialog(
-      barrierDismissible: false,
-      context: NavigationService.navigatorKey.currentContext!,
-      builder: (context) {
-        return WillPopScope(
-          onWillPop: () async {
-            return false; // Disable back button dismiss
-          },
-          child: AlertDialog(
-            insetPadding: const EdgeInsets.all(15.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            contentPadding: EdgeInsets.zero,
-            content: Center(
-              child: SizedBox(
-                height: SizeConfig.blockSizeVertical! * 8,
-                width: SizeConfig.blockSizeVertical! * 8,
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 3,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
+  static showProgress(String status) {
+    EasyLoading.show(status: status);
+    // showDialog(
+    //   barrierDismissible: false,
+    //   context: NavigationService.navigatorKey.currentContext!,
+    //   builder: (context) {
+    //     return WillPopScope(
+    //       onWillPop: () async {
+    //         return false; // Disable back button dismiss
+    //       },
+    //       child: AlertDialog(
+    //         insetPadding: const EdgeInsets.all(15.0),
+    //         shape: RoundedRectangleBorder(
+    //           borderRadius: BorderRadius.circular(12),
+    //         ),
+    //         backgroundColor: Colors.transparent,
+    //         elevation: 0,
+    //         contentPadding: EdgeInsets.zero,
+    //         content: Center(
+    //           child: SizedBox(
+    //             height: SizeConfig.blockSizeVertical! * 8,
+    //             width: SizeConfig.blockSizeVertical! * 8,
+    //             child: CircularProgressIndicator(
+    //               color: Colors.white,
+    //               strokeWidth: 3,
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   static dismissProgress() {
-    if (Navigator.canPop(NavigationService.navigatorKey.currentContext!)) {
-      Navigator.pop(NavigationService.navigatorKey.currentContext!);
-    }
+    EasyLoading.dismiss();
+    // if (Navigator.canPop(rootNavigatorKey.currentContext!)) {
+    //   Navigator.pop(rootNavigatorKey.currentContext!);
+    // }
+
   }
 
+}
+
+class ConstantVariableClass {
+  static String noResultString = 'Not added';
+
+  static String loadingString = 'Loading';
+
+  static String seatload = 'Fetching Seat';
+
+
+  static bool dashboardScreenBoolean = false;
+
+  var familyHeadScrollBoolean = ValueNotifier<bool>(true);
 }

@@ -1,4 +1,5 @@
 import "package:ecebee/allimports.dart";
+import "package:flutter_easyloading/flutter_easyloading.dart";
 import "package:supabase_flutter/supabase_flutter.dart";
 
 import "helper/navigatorService.dart";
@@ -27,11 +28,28 @@ class MyApp extends StatelessWidget {
         create: (context) => LoginScreenBloc(),
         child: LoginScreen(),
       ),
-      navigatorKey: NavigationService.navigatorKey,
+      //navigatorKey: NavigationService.navigatorKey,
       onGenerateRoute: getRoute,
+      builder: EasyLoading.init(),
     );
 
   }
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.white
+    ..backgroundColor = topicColor
+    ..indicatorColor = Colors.white
+    ..textColor = Colors.black
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = false
+    ..dismissOnTap = false;
 }
 
 

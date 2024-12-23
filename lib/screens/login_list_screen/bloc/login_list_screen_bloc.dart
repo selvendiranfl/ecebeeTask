@@ -12,11 +12,11 @@ class LoginListScreenBloc extends Bloc<LoginListScreenEvent, LoginListScreenStat
   LoginListScreenBloc() : super(LoginListScreenInitial()) {
     on<LoginListScreenEvent>((event, emit) async {
       if(event is FetchLoginDetailsEvent){
-        Utilities.showProgress();
+        Utilities.showProgress("Fetching data");
         try {
           final response = await Supabase.instance.client
               .from('login_details')
-              .select();
+              .select().eq("phone_number", Utilities.phone_number);
 
           if (response == null || response is! List) {
             throw Exception('Invalid response');

@@ -11,4 +11,6 @@ final class OtpVerifiedState extends LoginScreenState {}
 
 final class OtpfailedState extends LoginScreenState {}
 
+final class LocationFetchState extends LoginScreenState {}
+
 

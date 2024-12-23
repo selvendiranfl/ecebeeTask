@@ -141,13 +141,9 @@ class _LoginListScreenState extends State<LoginListScreen> {
                                                     color: Colors.white,
                                                   ),
                                                   CustomText(
-                                                    text: "latitude : ${bloc.todayData[index].latitude}",
+                                                    text: bloc.todayData[index].location,
                                                     color: Colors.white,
                                                   ),
-                                                  CustomText(
-                                                    text: "longitude : ${bloc.todayData[index].longitude}",
-                                                    color: Colors.white,
-                                                  )
                                                 ],
                                               ),
                                               bloc.todayData[index].randomNumber != null ? Container(
@@ -193,13 +189,9 @@ class _LoginListScreenState extends State<LoginListScreen> {
                                                         color: Colors.white,
                                                       ),
                                                       CustomText(
-                                                        text: "latitude : ${bloc.yesterdayData[index].latitude}",
+                                                        text: bloc.yesterdayData[index].location,
                                                         color: Colors.white,
                                                       ),
-                                                      CustomText(
-                                                        text: "longitude : ${bloc.yesterdayData[index].longitude}",
-                                                        color: Colors.white,
-                                                      )
                                                     ],
                                                   ),
                                                   bloc.yesterdayData[index].randomNumber != null ? Container(
@@ -245,13 +237,9 @@ class _LoginListScreenState extends State<LoginListScreen> {
                                                         color: Colors.white,
                                                       ),
                                                       CustomText(
-                                                        text: "latitude : ${ bloc.otherData[index].latitude}",
+                                                        text: bloc.otherData[index].location,
                                                         color: Colors.white,
                                                       ),
-                                                      CustomText(
-                                                        text: "longitude : ${ bloc.otherData[index].longitude}",
-                                                        color: Colors.white,
-                                                      )
                                                     ],
                                                   ),
                                                   bloc.otherData[index].randomNumber != null ?Container(

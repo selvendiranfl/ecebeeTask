@@ -14,13 +14,13 @@ class PluginScreenBloc extends Bloc<PluginScreenEvent, PluginScreenState> {
     on<PluginScreenEvent>((event, emit) async {
 
       if(event is LoginDetailsSaveEvent){
-        Utilities.showProgress();
+        Utilities.showProgress("Insert Data");
         final response = await Supabase.instance.client
             .from('login_details')
             .insert({
           'ip_address': await Utilities.GetIPaddress(),
-          'latitude': latitude,
-          'longitude': longitude,
+          'location': Utilities.location,
+          'phone_number': Utilities.phone_number,
           'timestamp': DateTime.now().toString(),
         }).select('id').single();
         Utilities.dismissProgress();
@@ -34,7 +34,7 @@ class PluginScreenBloc extends Bloc<PluginScreenEvent, PluginScreenState> {
       }
 
       if(event is QRDetailsSaveEvent){
-        Utilities.showProgress();
+        Utilities.showProgress("Insert QR Data");
         final response = await Supabase.instance.client.from('login_details').update({
           'random_number': randomNumber.toString(),
         }).eq("id", loginId);

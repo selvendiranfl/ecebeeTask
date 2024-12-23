@@ -19,27 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
     bloc = BlocProvider.of<LoginScreenBloc>(context);
-    checkPermission();
   }
-  Future<void> checkPermission() async {
-    LocationPermission permission = await Geolocator.checkPermission();
 
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    print("happens");
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    Utilities.latitude = position.latitude.toString();
-    Utilities.longitude = position.longitude.toString();
-  }
 
 
 
@@ -50,6 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<LoginScreenBloc, LoginScreenState>(
       listener: (context, state) {
         if(state is OtpVerifiedState){
+          bloc.add(GetLocationEvent());
+        }
+        if(state is LocationFetchState){
           Navigator.pushNamedAndRemoveUntil(context, AppRoutes.plugInScreen, (route) => false);
         }
       },
